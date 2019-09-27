@@ -178,24 +178,25 @@ public class App {
             System.out.println("Te regalamos " + b2.consultarSaldoCuentaUnica() + " pesitos disfrutalos!!");
 
             Movimiento m2 = new Movimiento();
+            m2.setCuenta(b2.getCuentas().get(0));
             m2.setImporte(100);
             b2.getCuentas().get(0).agregarMovimiento(m2);
 
             Billetera b3 = ABMBilletera.read(b.getBilleteraId());
-
-            ABMBilletera.update(b2);
+            // ABMBilletera.update(b2);
             Movimiento m3 = new Movimiento();
+            m3.setCuenta(b3.getCuentas().get(0));
             m3.setImporte(-50);
             b3.getCuentas().get(0).agregarMovimiento(m3);
-            ABMBilletera.update(b3);
+            // ABMBilletera.update(b3);
 
-            // en billetera hay que generar el metodo con la información arriba 
+            // en billetera hay que generar el metodo con la información arriba
 
             // public void transferencia(){ mov m2 = new mov m2importe =-importe}
             // this.agregarmovimiento(m2)
-            //mov msalida= new movimiento();
-            //msalida--->importe
-            //billeteradestino.agregarmov(movimientodeentrada)
+            // mov msalida= new movimiento();
+            // msalida--->importe
+            // billeteradestino.agregarmov(movimientodeentrada)
 
         }
     }

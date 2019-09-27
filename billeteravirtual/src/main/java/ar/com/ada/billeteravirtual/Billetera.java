@@ -58,8 +58,10 @@ public class Billetera {
         this.cuentas.get(0).agregarPlata(persona.getUsuario().getUsuarioId(), concepto, plata, detalle);
     }
 
-    public double consultarSaldoCuentaUnica()
-    {
+    public double consultarSaldoCuentaUnica() {
         return this.cuentas.get(0).getSaldo();
+    }
+
+    public void Transferencia() {
     }
 }

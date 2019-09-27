@@ -77,7 +77,8 @@ public class Movimiento {
 
     public void setImporte(double importe) {
         this.importe = importe;
-        
+        this.cuenta.setSaldo(this.cuenta.getSaldo()+ importe);
+        this.cuenta.setSaldoDisponible(this.cuenta.getSaldo());
     }
 
     public String getConceptoOperacion() {
