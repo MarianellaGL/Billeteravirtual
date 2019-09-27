@@ -36,12 +36,12 @@ public class PersonaManager {
         sessionFactory.close();
     }
 
-    protected void create(Persona persona) {
+    protected void create(Persona p) {
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.save(persona);
+        session.save(p);
         //Si no activo el cascade all en el OnToOne del usuario, tengo que forzar la llamada
         //session.save(persona.getUsuario());
   

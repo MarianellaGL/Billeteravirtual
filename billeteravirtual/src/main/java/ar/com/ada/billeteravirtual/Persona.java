@@ -21,13 +21,16 @@ public class Persona {
     @Id
     @Column(name = "persona_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int pesonaId;
+    private int personaId;
     private String nombre;
     private String dni;
     private int edad;
     private String email;
 
     @OneToOne( mappedBy = "persona", cascade = CascadeType.ALL)
+    private Billetera billetera;
+//clase Persona= clase contenedora donde va el mappedby
+    @OneToOne( mappedBy = "persona", cascade = CascadeType.ALL) //primero persona despues usuario .all es todo: persistir, merge (no recomendable), remove, refresh, etc
     private Usuario usuario;
 
     public Persona(String nombre, String dni, int edad, String email) {
@@ -40,12 +43,12 @@ public class Persona {
     public Persona() {
     }
 
-    public int getPesonaId() {
-        return pesonaId;
+    public int getPersonaId() {
+        return personaId;
     }
 
-    public void setPesonaId(int pesonaId) {
-        this.pesonaId = pesonaId;
+    public void setPersonaId(int personaId) {
+        this.personaId = personaId;
     }
 
     public String getNombre() {
@@ -104,5 +107,16 @@ public class Persona {
      */
     public Usuario getUsuario() {
         return usuario;
+    }
+
+
+
+    public Billetera getBilletera() {
+        return billetera;
+    }
+
+    public void setBilletera(Billetera billetera) {
+        this.billetera = billetera;
+        this.billetera.setPersona(this);
     }
 }

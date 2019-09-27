@@ -31,7 +31,8 @@ public class Usuario {
 //ACTIVO lel OneTo One, pero para que funcione persona tiene quetener un valor. Aca no hace falta el cascade
   @OneToOne
     @JoinColumn(name = "persona_id", referencedColumnName = "persona_id")
-    //@MapsId
+    //join va del lado donde esta puesta la FK
+    //@MapsId ese mapea con el que sta ref con el objeto persona
     private Persona persona;
 
 
@@ -107,6 +108,9 @@ public class Usuario {
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
+
+	public void setPersonaId(int personaId) {
+	}
 
     /*public String getEmail() {
         return email;
