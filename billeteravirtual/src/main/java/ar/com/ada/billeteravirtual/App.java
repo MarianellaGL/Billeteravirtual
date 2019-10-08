@@ -371,6 +371,7 @@ public class App {
 
     public static void listarPersona() {
 
+
         List<Persona> todas = ABMPersona.buscarTodas();
         for (Persona p : todas) {
             System.out.println("Id: " + p.getPersonaId() + " Nombre: " + p.getNombre());
