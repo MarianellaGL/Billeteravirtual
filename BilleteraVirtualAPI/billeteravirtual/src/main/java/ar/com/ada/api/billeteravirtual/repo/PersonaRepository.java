@@ -10,4 +10,5 @@ public interface PersonaRepository extends JpaRepository<Persona, Integer> {
     Persona findByNombre(String nombrePersona);
 
     Persona findByDni(String dni);
+
 }

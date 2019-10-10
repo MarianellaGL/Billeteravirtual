@@ -5,10 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import ar.com.ada.api.billeteravirtual.repo.UsuarioRepository;
 import ar.com.ada.api.billeteravirtual.security.Crypto;
 import ar.com.ada.api.billeteravirtual.entities.*;
+import ar.com.ada.api.billeteravirtual.excepciones.PersonaDNIException;
 import ar.com.ada.api.billeteravirtual.excepciones.PersonaEdadException;
 
 /**
@@ -26,13 +28,16 @@ public class UsuarioService {
     @Autowired
     PersonaService ps;
 
-    public int alta(String fullName, String dni, String email, int edad, String password, String moneda,
-            String userEmail) throws PersonaEdadException {
+    @PostMapping("auth/register")
+    public int alta(String fullName, String dni, String email, String userName, int edad, String password, String moneda,
+            String userEmail) throws PersonaEdadException,PersonaDNIException{
         Persona p = new Persona();
         p.setNombre(fullName);
         p.setDni(dni);
         p.setEmail(email);
         p.setEdad(edad);
+
+        p.getPersonaId();
 
         Usuario u = new Usuario();
         u.setUserName(p.getEmail());
@@ -57,6 +62,7 @@ public class UsuarioService {
         bs.save(b);
 
         return u.getUsuarioId();
+
     }
 
     public void save(Usuario u) {

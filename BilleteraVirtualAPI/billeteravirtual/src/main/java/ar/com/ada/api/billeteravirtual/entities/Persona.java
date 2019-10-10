@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ar.com.ada.api.billeteravirtual.excepciones.PersonaEdadException;
 
 
@@ -26,6 +28,7 @@ public class Persona {
     private String nombre;
     private String dni;
     private int edad;
+    @Column(name = "email")
     private String email;
     @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL)
     private Billetera billetera;
@@ -49,8 +52,8 @@ public class Persona {
         return personaId;
     }
 
-    public void setPersonaId(int pesonaId) {
-        this.personaId = pesonaId;
+    public void setPersonaId(int personaId) {
+        this.personaId = personaId;
     }
 
     public String getNombre() {
@@ -66,6 +69,7 @@ public class Persona {
     }
 
     public void setDni(String dni) {
+    
         this.dni = dni;
     }
 
@@ -83,17 +87,22 @@ public class Persona {
         }
         this.edad = edad;
     }
-
-    public String getEmail() {
-        return email;
+    
+    @Override
+    public String toString() {
+        return "Persona [dni=" + dni + ", edad=" + edad + ", nombre=" + nombre + "]";
     }
+
+ 
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-	public void setPersona(Persona p) {
-	}
+    public String getEmail() {
+        return email;
+    }
+
 
    /**
      * @param usuario the usuario to set
@@ -102,6 +111,13 @@ public class Persona {
         this.usuario = usuario;
         this.usuario.setPersona(this); //Vinculamos ambos objetos entre si
     }
+
+    public void setBilletera(Billetera billetera) {
+        this.billetera = billetera;
+        this.billetera.setPersona(this);
+    }
+
+    @JsonIgnore
     /**
      * @return the usuario
      */
@@ -109,14 +125,14 @@ public class Persona {
         return usuario;
     }
 
+    @JsonIgnore
+
     public Billetera getBilletera() {
         return billetera;
     }
 
-    public void setBilletera(Billetera billetera) {
-        this.billetera = billetera;
-        this.billetera.setPersona(this);
-    }
 
+
+ 
     
 }

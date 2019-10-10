@@ -23,7 +23,7 @@ import javax.persistence.*;
         @Column(name = "fechamovimiento")
         private Date fechaMovimiento;
     
-        private int importe;
+        private double importe;
     
         @Column(name = "tipooperacion")
         private String tipoOperacion;
@@ -72,9 +72,11 @@ import javax.persistence.*;
             this.fechaMovimiento = fechaMovimiento;
         }
     
-        public int getImporte() {
+        public double getImporte() {
             return importe;
         }
+
+        
     
         public String getConceptoOperacion() {
             return conceptoOperacion;
@@ -152,7 +154,6 @@ import javax.persistence.*;
          * @param u
          */
         public Movimiento(Cuenta c, Usuario u) {
-            System.out.println("Gracias por crear tu billetera! te regalamos " + c.getMoneda() + " 100 para que empieces a usarla.");
             Date f = new Date();
             this.setConceptoOperacion("Carga inicial");
             this.setImporte(100);
@@ -174,17 +175,21 @@ import javax.persistence.*;
 
 
 
-    void setImporte(int i) {
+    public void setImporte(double i) {
     }
 
     public Movimiento() {
 		}
 
-	private void setCuentaDestinoId(int cuentaId) {
+	public void setCuentaDestinoId(int cuentaId) {
     }
 
-    private void setCuentaOrigenId(int cuentaId) {
+    public void setCuentaOrigenId(int cuentaId) {
 		}
+
+	public Object getTipo() {
+		return null;
+	}
 
 
 	

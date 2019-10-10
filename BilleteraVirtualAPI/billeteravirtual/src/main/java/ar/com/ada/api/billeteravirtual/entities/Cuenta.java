@@ -18,10 +18,10 @@ public class Cuenta {
 
     private String moneda;
 
-    private int saldo;
+    private double saldo;
 
     @Column(name = "saldodisponible")
-    private int saldoDisponible;
+    private double saldoDisponible;
 
     @ManyToOne
     @JoinColumn(name = "billetera_id", referencedColumnName = "billetera_id")
@@ -30,9 +30,46 @@ public class Cuenta {
     @OneToMany(mappedBy = "cuenta", cascade = CascadeType.ALL)
     private List<Movimiento> movimientos = new ArrayList<Movimiento>();
 
-    public Cuenta(Billetera b, String moneda2) {
-	}
 
+    public static Scanner Teclado = new Scanner(System.in);
+
+    void dineroPendiente() {
+
+    }
+
+    void ultimosMovimientos() {
+
+    }
+
+    void dineroIngresado() {
+
+    }
+
+    void dineroExtraido() {
+
+    }
+
+    public Cuenta(Billetera b, String moneda2) {
+
+        this.moneda = moneda;
+        b.getCuentas().add(this);
+        
+    }
+    
+    public Cuenta(){
+        this.moneda= moneda;
+        this.saldo = saldo;
+        this.movimientos= movimientos;
+
+        
+    }
+    
+    public Usuario getUsuario(){
+        Usuario u = this.getBilletera().getPersona().getUsuario(); 
+        return u; 
+
+
+    }
 	public int getCuentaId() {
         return cuentaId;
     }
@@ -49,20 +86,27 @@ public class Cuenta {
         this.moneda = moneda;
     }
 
-    public int getSaldo() {
+    public double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(int saldo) {
-        this.saldo = saldo;
+    public void setSaldo(double d) {
+        this.saldo = d;
     }
 
-    public int getSaldoDisponible() {
-        return saldoDisponible;
+    public double getSaldoDisponible() {
+        if(saldo>0.00){
+        return saldo;
+        }
+        else{
+            return 0.00;
+        }
+
+        
     }
 
-    public void setSaldoDisponible(int saldoDisponible) {
-        this.saldoDisponible = saldoDisponible;
+    public void setSaldoDisponible(double d) {
+        this.saldoDisponible = 0;
     }
 
     public Billetera getBilletera() {
@@ -71,6 +115,7 @@ public class Cuenta {
 
     public void setBilletera(Billetera billetera) {
         this.billetera = billetera;
+        this.billetera.getCuentas().add(this);
     }
 
     public List<Movimiento> getMovimientos() {
@@ -81,7 +126,7 @@ public class Cuenta {
         this.movimientos = movimientos;
     }
 
-    public void agregarPlata(int usuarioDe, String concepto, int plata, String detalle) {
+    public void agregarPlata(int usuarioDe, String concepto, double plata, String detalle) {
         Movimiento m = new Movimiento();
 
         m.setCuenta(this);
