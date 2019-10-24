@@ -33,7 +33,7 @@ import javax.persistence.*;
     
         private String detalle;
     
-        private String estado;
+        private int estado;
     
         @Column(name = "deusuario_id")
         private int deUsuarioId;
@@ -76,6 +76,10 @@ import javax.persistence.*;
             return importe;
         }
 
+        public void setImporte(double importe){
+            this.importe= importe;
+        }
+
         
     
         public String getConceptoOperacion() {
@@ -85,6 +89,7 @@ import javax.persistence.*;
         public void setConceptoOperacion(String conceptoOperacion) {
             this.conceptoOperacion = conceptoOperacion;
         }
+
     
         public String getDetalle() {
             return detalle;
@@ -94,11 +99,11 @@ import javax.persistence.*;
             this.detalle = detalle;
         }
     
-        public String getEstado() {
+        public int getEstado() {
             return estado;
         }
     
-        public void setEstado(String estado) {
+        public void setEstado(int estado) {
             this.estado = estado;
         }
     
@@ -146,21 +151,15 @@ import javax.persistence.*;
     
     
     
-    
-        /**
-         * Este constructor crea un movimiento inicial. Hay que sacar el print y
-         * adaptarlo para generar distintos movimientos, no solo inicial.
-         * @param c
-         * @param u
-         */
         public Movimiento(Cuenta c, Usuario u) {
             Date f = new Date();
-            this.setConceptoOperacion("Carga inicial");
-            this.setImporte(100);
-            this.setTipoOperacion("Entrada");
+            this.setConceptoOperacion(conceptoOperacion);
+            this.setImporte(importe);
+            this.setTipoOperacion(tipoOperacion);
             this.setFechaMovimiento(f);
-            this.setCuentaOrigenId(c.getCuentaId());
-            this.setCuentaDestinoId(c.getCuentaId());
+            this.setDetalle(detalle);
+            this.setDeCuentaId(c.getCuentaId());
+            this.setaCuentaId(c.getCuentaId());
             this.setaUsuarioId(u.getUsuarioId());
             this.setDeUsuarioId(u.getUsuarioId());
             if (this.getTipoOperacion().equals("Entrada")) {
@@ -175,22 +174,10 @@ import javax.persistence.*;
 
 
 
-    public void setImporte(double i) {
-    }
+  
 
     public Movimiento() {
 		}
-
-	public void setCuentaDestinoId(int cuentaId) {
-    }
-
-    public void setCuentaOrigenId(int cuentaId) {
-		}
-
-	public Object getTipo() {
-		return null;
-	}
-
 
 	
     

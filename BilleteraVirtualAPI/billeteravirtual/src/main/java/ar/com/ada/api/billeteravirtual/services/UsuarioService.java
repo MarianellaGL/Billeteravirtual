@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -29,8 +30,8 @@ public class UsuarioService {
     PersonaService ps;
 
     @PostMapping("auth/register")
-    public int alta(String fullName, String dni, String email, String userName, int edad, String password, String moneda,
-            String userEmail) throws PersonaEdadException,PersonaDNIException{
+    public int alta(String fullName, String dni, String email, String userName, int edad, String password,
+            String moneda, String userEmail) throws PersonaEdadException, PersonaDNIException {
         Persona p = new Persona();
         p.setNombre(fullName);
         p.setDni(dni);
@@ -91,6 +92,17 @@ public class UsuarioService {
         if (u.isPresent())
             return u.get();
         return null;
+    }
+
+    public void login(String username, String password){
+
+        Usuario u = repo.findByuserName(username);
+
+        if( u== null || !u.getPassword().equals(Crypto.encrypt(password, u.getUserName()))){
+
+            throw new BadCredentialsException("usuario o contraseña inválida");
+
+        }
     }
 
 }

@@ -6,7 +6,10 @@ public class MovimientoRequest {
     public String moneda;
     public String conceptoOperacion;
     public double importe;
-    public String tipo;
+    public String tipoOperacion;
+    public String detalle;
+
+
 
 
     

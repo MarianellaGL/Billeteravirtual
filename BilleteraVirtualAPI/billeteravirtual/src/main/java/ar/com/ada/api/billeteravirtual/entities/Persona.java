@@ -69,7 +69,7 @@ public class Persona {
     }
 
     public void setDni(String dni) {
-    
+
         this.dni = dni;
     }
 
@@ -88,10 +88,7 @@ public class Persona {
         this.edad = edad;
     }
     
-    @Override
-    public String toString() {
-        return "Persona [dni=" + dni + ", edad=" + edad + ", nombre=" + nombre + "]";
-    }
+ 
 
  
 

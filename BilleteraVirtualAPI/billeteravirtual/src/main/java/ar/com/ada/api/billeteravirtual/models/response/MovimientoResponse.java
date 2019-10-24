@@ -7,7 +7,8 @@ public class MovimientoResponse {
     public int billeteraId;
     public String moneda;
     public int movimientoId;
-    
+    public String detalle;
+  
 
 
     

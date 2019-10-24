@@ -17,6 +17,9 @@ public class BilleteraService {
     @Autowired
     BilleteraRepository repo;
 
+    @Autowired
+    MovimientoService ms;
+
     public void save(Billetera b) {
         repo.save(b);
     }
@@ -52,17 +55,13 @@ public class BilleteraService {
 
     }
 
-
-
-public int transferir(int billeteraIdOrigen, int billeteraIdDestino, double importe) {
-    Billetera b1 = this.buscarPorId(billeteraIdOrigen);
-    Billetera b2 = this.buscarPorId(billeteraIdDestino);
-    int mov = b1.movimientoTransferir(-importe, b1.getCuenta(0), b2.getCuenta(0));
-    b2.movimientoTransferir(importe, b2.getCuenta(0), b1.getCuenta(0));
-    repo.save(b1);
-    repo.save(b2);
-    return mov;
+    public int transferir(int billeteraIdOrigen, int billeteraIdDestino, double importe) {
+        Billetera b1 = this.buscarPorId(billeteraIdOrigen);
+        Billetera b2 = this.buscarPorId(billeteraIdDestino);
+        int mov = b1.movimientoTransferir(-importe, b1.getCuenta(0), b2.getCuenta(0));
+        b2.movimientoTransferir(importe, b2.getCuenta(0), b1.getCuenta(0));
+        repo.save(b1);
+        repo.save(b2);
+        return mov;
+    }
 }
-}
-
-

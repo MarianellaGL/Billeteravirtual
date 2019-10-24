@@ -9,8 +9,8 @@ import javax.persistence.*;
 /**
  * BilleteraVirtual
  */
-@Entity
-@Table(name = "billetera")
+        @Entity
+        @Table(name = "billetera")
 public class Billetera {
 
     @Id
@@ -69,10 +69,6 @@ public class Billetera {
         cuenta.setBilletera(this);
     }
 
-    public void agregarPlata(int plata, String concepto, String detalle) {
-        // Agarro el primero y le meto plata
-        this.cuentas.get(0).agregarPlata(persona.getUsuario().getUsuarioId(), concepto, plata, detalle);
-    }
 
     public double consultarSaldoDisponible(Billetera b, String moneda)
     {
@@ -100,20 +96,21 @@ public class Billetera {
      * @param bOrigen
      * @param bDestino
      */
-    public int movimientoTransferir(double importe, Cuenta cuentaDesde, Cuenta cuentaHasta) {
+    public int movimientoTransferir(double importe, Cuenta deCuentaId, Cuenta aCuentaId) {
         Movimiento m = new Movimiento();
         m.setImporte(importe);
         m.setCuenta(this.getCuenta(0));
         Date f = new Date();
-        m.setConceptoOperacion(" ");
+        m.setConceptoOperacion("Transferencia");
         m.setTipoOperacion("Transferencia");
+        m.setDetalle("");
         m.setFechaMovimiento(f);
-        m.setCuentaOrigenId(cuentaDesde.getCuentaId());
-        m.setCuentaDestinoId(cuentaHasta.getCuentaId());
-        m.setDeUsuarioId(cuentaDesde.getUsuario().getUsuarioId());
-        m.setaUsuarioId(cuentaHasta.getUsuario().getUsuarioId());
-        cuentaDesde.setSaldo(cuentaDesde.getSaldo() + importe);
-        cuentaDesde.setSaldoDisponible(cuentaDesde.getSaldoDisponible() + importe);
+        m.setDeCuentaId(deCuentaId.getCuentaId());
+        m.setaCuentaId(aCuentaId.getCuentaId());
+        m.setDeUsuarioId(deCuentaId.getUsuario().getUsuarioId());
+        m.setaUsuarioId(aCuentaId.getUsuario().getUsuarioId());
+        deCuentaId.setSaldo(deCuentaId.getSaldo() + importe);
+        deCuentaId.setSaldoDisponible(deCuentaId.getSaldoDisponible() + importe);
         return m.getMovimientoId();
     }
     

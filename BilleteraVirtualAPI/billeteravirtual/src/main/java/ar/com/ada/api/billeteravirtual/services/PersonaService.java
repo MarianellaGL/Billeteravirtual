@@ -43,8 +43,9 @@ public class PersonaService {
 
         Optional<Persona> p = repo.findById(id);
         
-        if (p.isPresent())
+        if (p.isPresent()){
             return p.get();
+        }
         return null;
     }
 

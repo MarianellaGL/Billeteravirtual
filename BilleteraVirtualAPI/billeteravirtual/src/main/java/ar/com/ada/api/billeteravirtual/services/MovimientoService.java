@@ -13,19 +13,18 @@ import ar.com.ada.api.billeteravirtual.repo.MovimientoRepository;
 public class MovimientoService {
 
     @Autowired
-    MovimientoRepository mr;
+    MovimientoRepository repo;
 
     @Autowired
     BilleteraService bs;
 
     @Autowired
     CuentaService cs;
-    
-    public void save(Movimiento m){
 
-        mr.save(m);
+    public void save(Movimiento m) {
+
+        repo.save(m);
     }
-
 
     /**
      * Método para crear movimientos que viene desde fuera de la API, como cuenta
@@ -39,21 +38,22 @@ public class MovimientoService {
      * @param tipo     "Entrada" o "Salida"
      * @throws CuentaPorMonedaException
      */
-    public int depositar(int billeteraId, String moneda, String concepto, double importe, String tipoOperacion)
+    public int depositar(int billeteraId, String moneda, String conceptoOperacion, double importe, String tipoOperacion, String detalle)
             throws CuentaPorMonedaException {
         Billetera b = bs.buscarPorId(billeteraId);
         Cuenta c = cs.getCuentaPorMoneda(billeteraId, moneda);
         Movimiento m = new Movimiento();
         Date f = new Date();
-        m.setConceptoOperacion(concepto);
+        m.setConceptoOperacion(conceptoOperacion);
         m.setImporte(importe);
         m.setTipoOperacion(tipoOperacion);
+        m.setDetalle(detalle);
         m.setFechaMovimiento(f);
-        m.setCuentaOrigenId(c.getCuentaId());
-        m.setCuentaDestinoId(c.getCuentaId());
-        m.setaUsuarioId(c.getBilletera().getPersona().getUsuario().getUsuarioId());
+        m.setDeCuentaId(c.getCuentaId());
+        m.setaCuentaId(c.getCuentaId());
         m.setDeUsuarioId(c.getBilletera().getPersona().getUsuario().getUsuarioId());
-        if (m.getTipo().equals("Entrada")) {
+        m.setaUsuarioId(c.getBilletera().getPersona().getUsuario().getUsuarioId());
+        if (m.getTipoOperacion().equals("Entrada")) {
             c.setSaldo(c.getSaldo() + m.getImporte());
             c.setSaldoDisponible(c.getSaldo());
         } else {
@@ -61,10 +61,9 @@ public class MovimientoService {
             c.setSaldoDisponible(c.getSaldo());
         }
         m.setCuenta(c);
-        mr.save(m);
-        bs.save(b);
-        //RequestResponse no devuelve los ids, qué caranchos pasa?
+        repo.save(m);
+
         return m.getMovimientoId();
     }
+
 }
-    

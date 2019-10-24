@@ -30,7 +30,6 @@ public class Cuenta {
     @OneToMany(mappedBy = "cuenta", cascade = CascadeType.ALL)
     private List<Movimiento> movimientos = new ArrayList<Movimiento>();
 
-
     public static Scanner Teclado = new Scanner(System.in);
 
     void dineroPendiente() {
@@ -53,24 +52,20 @@ public class Cuenta {
 
         this.moneda = moneda;
         b.getCuentas().add(this);
-        
-    }
-    
-    public Cuenta(){
-        this.moneda= moneda;
-        this.saldo = saldo;
-        this.movimientos= movimientos;
-
-        
-    }
-    
-    public Usuario getUsuario(){
-        Usuario u = this.getBilletera().getPersona().getUsuario(); 
-        return u; 
-
 
     }
-	public int getCuentaId() {
+
+    public Cuenta() {
+
+    }
+
+    public Usuario getUsuario() {
+        Usuario u = this.getBilletera().getPersona().getUsuario();
+        return u;
+
+    }
+
+    public int getCuentaId() {
         return cuentaId;
     }
 
@@ -95,14 +90,12 @@ public class Cuenta {
     }
 
     public double getSaldoDisponible() {
-        if(saldo>0.00){
-        return saldo;
-        }
-        else{
+        if (saldo > 0.00) {
+            return saldo;
+        } else {
             return 0.00;
         }
 
-        
     }
 
     public void setSaldoDisponible(double d) {
@@ -124,25 +117,7 @@ public class Cuenta {
 
     public void setMovimientos(List<Movimiento> movimientos) {
         this.movimientos = movimientos;
+
     }
 
-    public void agregarPlata(int usuarioDe, String concepto, double plata, String detalle) {
-        Movimiento m = new Movimiento();
-
-        m.setCuenta(this);
-        m.setTipoOperacion("INGRESO");
-        m.setImporte(plata);
-        m.setConceptoOperacion(concepto);
-        m.setDetalle(detalle);
-        m.setFechaMovimiento(new Date());
-        m.setDeUsuarioId(usuarioDe);
-        m.setaUsuarioId(usuarioDe);
-        m.setDeCuentaId(this.cuentaId);
-        m.setaCuentaId(this.cuentaId);
-
-        this.movimientos.add(m);
-    }
-
-    public void agregarMovimiento(Movimiento m2) {
-    }
 }

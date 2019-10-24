@@ -26,8 +26,8 @@ public class BilleteraController {
     @Autowired
     CuentaService cs;
 
-    @GetMapping("billeteras/saldos/{id}")
-    public double getConsultarSaldo(@PathVariable int billeteraId,String moneda){
+    @GetMapping("billeteras/{billeteraId}/saldos/{moneda}")
+    public double getConsultarSaldo(@PathVariable int billeteraId,@PathVariable String moneda){
 
         double saldo = bs.consultarSaldo(billeteraId, moneda);
         return saldo;
@@ -36,18 +36,20 @@ public class BilleteraController {
     }
 
     @PostMapping("billeteras/depositos")
-    public MovimientoResponse postAgregarPlata(@RequestBody MovimientoRequest mov)
+    public MovimientoResponse postAgregarPlata(@RequestBody MovimientoRequest req)
             throws CuentaPorMonedaException{
         MovimientoResponse r = new MovimientoResponse();
       //se agrega plata en un nuevo movimiento
 
-        int movimientoId = ms.depositar(mov.billeteraId, mov.moneda, mov.conceptoOperacion, mov.importe, mov.tipo);
+        int movimientoId = ms.depositar(req.billeteraId, req.moneda, req.conceptoOperacion, req.importe, req.tipoOperacion, req.detalle);
 
         r.isOk = true;
         r.message = "Transacción realizada";
-        r.billeteraId = mov.billeteraId;
-        r.moneda = mov.moneda;
+        r.billeteraId = req.billeteraId;
+        r.detalle = req.detalle;
+        r.moneda = req.moneda;
         r.movimientoId = movimientoId;
+        
     
     
         return r;
@@ -58,14 +60,15 @@ public class BilleteraController {
     public TransferenciaResponse postTransferencia(@RequestBody TransferenciaRequest req){
         TransferenciaResponse r = new TransferenciaResponse();
 
-        int operacionId = bs.transferir(req.billeteraIdDestino, req.billeteraIdDestino, req.importe);
+        int operacionId = bs.transferir(req.billeteraIdOrigen, req.billeteraIdDestino, req.importe);
 
         r.isOk = true;
-        r.billeteraIdDestino = req.billeteraIdDestino;
+        r.message = "Transferencia realizada";
+        r.billeteraIdOrigen = req.billeteraIdOrigen;
         r.billeteraIdDestino = req.billeteraIdDestino;
         r.importe = req.importe;
         r.operacionId = operacionId;
-        return r; //cómo devolver los ids de movimientos? conviene?
+        return r; 
     }
 }
 
