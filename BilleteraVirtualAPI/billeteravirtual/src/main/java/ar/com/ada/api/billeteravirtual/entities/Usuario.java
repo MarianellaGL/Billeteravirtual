@@ -87,7 +87,9 @@ public class Usuario {
     }
 
     public void setPersonaId(int personaId) {
-	}
+    }
+    
+    
 
    
 }

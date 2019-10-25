@@ -82,11 +82,11 @@ import javax.persistence.*;
 
         
     
-        public String getConceptoOperacion() {
+        public String getconceptoOperacion() {
             return conceptoOperacion;
         }
     
-        public void setConceptoOperacion(String conceptoOperacion) {
+        public void setconceptoOperacion(String conceptoOperacion) {
             this.conceptoOperacion = conceptoOperacion;
         }
 
@@ -153,7 +153,7 @@ import javax.persistence.*;
     
         public Movimiento(Cuenta c, Usuario u) {
             Date f = new Date();
-            this.setConceptoOperacion(conceptoOperacion);
+            this.setconceptoOperacion(conceptoOperacion);
             this.setImporte(importe);
             this.setTipoOperacion(tipoOperacion);
             this.setFechaMovimiento(f);

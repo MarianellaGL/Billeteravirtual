@@ -32,24 +32,9 @@ public class Cuenta {
 
     public static Scanner Teclado = new Scanner(System.in);
 
-    void dineroPendiente() {
 
-    }
 
-    void ultimosMovimientos() {
-
-    }
-
-    void dineroIngresado() {
-
-    }
-
-    void dineroExtraido() {
-
-    }
-
-    public Cuenta(Billetera b, String moneda2) {
-
+    public Cuenta(Billetera b, String moneda) {
         this.moneda = moneda;
         b.getCuentas().add(this);
 

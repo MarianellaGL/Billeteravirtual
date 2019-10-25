@@ -101,7 +101,7 @@ public class Billetera {
         m.setImporte(importe);
         m.setCuenta(this.getCuenta(0));
         Date f = new Date();
-        m.setConceptoOperacion("Transferencia");
+        m.setconceptoOperacion("Transferencia");
         m.setTipoOperacion("Transferencia");
         m.setDetalle("");
         m.setFechaMovimiento(f);

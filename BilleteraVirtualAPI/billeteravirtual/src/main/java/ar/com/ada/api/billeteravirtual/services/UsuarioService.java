@@ -94,9 +94,9 @@ public class UsuarioService {
         return null;
     }
 
-    public void login(String username, String password){
+    public void login(String userName, String password){
 
-        Usuario u = repo.findByuserName(username);
+        Usuario u = repo.findByuserName(userName);
 
         if( u== null || !u.getPassword().equals(Crypto.encrypt(password, u.getUserName()))){
 

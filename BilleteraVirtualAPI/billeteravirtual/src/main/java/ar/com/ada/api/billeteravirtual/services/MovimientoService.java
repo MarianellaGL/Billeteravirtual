@@ -44,7 +44,7 @@ public class MovimientoService {
         Cuenta c = cs.getCuentaPorMoneda(billeteraId, moneda);
         Movimiento m = new Movimiento();
         Date f = new Date();
-        m.setConceptoOperacion(conceptoOperacion);
+        m.setconceptoOperacion("Depósito");
         m.setImporte(importe);
         m.setTipoOperacion(tipoOperacion);
         m.setDetalle(detalle);

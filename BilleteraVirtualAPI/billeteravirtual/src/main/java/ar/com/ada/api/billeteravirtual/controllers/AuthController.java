@@ -2,6 +2,7 @@ package ar.com.ada.api.billeteravirtual.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,9 +31,12 @@ public class AuthController {
     private JWTUserDetailService userDetailsService;
 
     @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
     UsuarioService usuarioService;
 
-    @PostMapping("auth/register")
+    @PostMapping("/auth/register")
     public RegistrationResponse postRegisterUser(@RequestBody RegistrationRequest req)
             throws PersonaEdadException, PersonaDNIException{
         RegistrationResponse r = new RegistrationResponse();
@@ -49,14 +53,14 @@ public class AuthController {
 
     }
 
-    @PostMapping("auth/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest authenticationRequest)
             throws Exception {
 
-        usuarioService.login(authenticationRequest.username, authenticationRequest.password);
+        usuarioService.login(authenticationRequest.userName, authenticationRequest.password);
 
         final UserDetails userDetails = userDetailsService
-            .loadUserByUsername(authenticationRequest.username);
+            .loadUserByUsername(authenticationRequest.userName);
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
@@ -67,3 +71,5 @@ public class AuthController {
     
     
 }
+
+// adadb compilacosafeaaaa
