@@ -7,7 +7,7 @@ import ar.com.ada.api.billeteravirtual.entities.*;
 
 @Repository
 public interface PersonaRepository extends JpaRepository<Persona, Integer> {
-    Persona findByNombre(String nombrePersona);
+    Persona findByNombre(String nombre);
 
     Persona findByDni(String dni);
 

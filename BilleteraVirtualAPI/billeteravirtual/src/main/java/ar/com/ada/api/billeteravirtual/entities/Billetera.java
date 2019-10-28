@@ -1,16 +1,21 @@
 package ar.com.ada.api.billeteravirtual.entities;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import ar.com.ada.api.billeteravirtual.excepciones.CuentaPorMonedaException;
+
 /**
  * BilleteraVirtual
  */
-        @Entity
-        @Table(name = "billetera")
+@Entity
+@Table(name = "billetera")
 public class Billetera {
 
     @Id
@@ -24,22 +29,21 @@ public class Billetera {
 
     @OneToMany(mappedBy = "billetera", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Cuenta> cuentas = new ArrayList<Cuenta>();
-    
+
     public Billetera(Persona p) {
         this.setPersona(p);
         p.setBilletera(this);
     }
 
-	public int getBilleteraId() {
+    public int getBilleteraId() {
         return billeteraId;
     }
 
     public void setBilleteraId(int billeteraId) {
         this.billeteraId = billeteraId;
-        
+
     }
-    
-    
+
     public Persona getPersona() {
         return persona;
     }
@@ -49,12 +53,10 @@ public class Billetera {
 
     }
 
-
-    
-    public Cuenta getCuenta(int index){
+    @JsonIgnore
+    public Cuenta getCuenta(int index) {
         return getCuentas().get(index);
     }
-
 
     public List<Cuenta> getCuentas() {
         return cuentas;
@@ -69,10 +71,9 @@ public class Billetera {
         cuenta.setBilletera(this);
     }
 
-
-    public double consultarSaldoDisponible(Billetera b, String moneda)
+    public BigDecimal consultarSaldoDisponible(Billetera b, String moneda) throws CuentaPorMonedaException
     {
-        double s = 0;
+        BigDecimal s = new BigDecimal(0);
 
         for (Cuenta c : b.getCuentas()){
             if (c.getMoneda().equals(moneda)){
@@ -89,14 +90,16 @@ public class Billetera {
 
     }
 
- /**
+    /**
      * Hace una transferencia entre cuentas principales.
      * 
      * @param importe
      * @param bOrigen
      * @param bDestino
+     * @throws CuentaPorMonedaException
      */
-    public int movimientoTransferir(double importe, Cuenta deCuentaId, Cuenta aCuentaId) {
+    public int movimientoTransferir(BigDecimal importe, Cuenta deCuentaId, Cuenta aCuentaId)
+            throws CuentaPorMonedaException {
         Movimiento m = new Movimiento();
         m.setImporte(importe);
         m.setCuenta(this.getCuenta(0));
@@ -109,8 +112,8 @@ public class Billetera {
         m.setaCuentaId(aCuentaId.getCuentaId());
         m.setDeUsuarioId(deCuentaId.getUsuario().getUsuarioId());
         m.setaUsuarioId(aCuentaId.getUsuario().getUsuarioId());
-        deCuentaId.setSaldo(deCuentaId.getSaldo() + importe);
-        deCuentaId.setSaldoDisponible(deCuentaId.getSaldoDisponible() + importe);
+        deCuentaId.setSaldo(deCuentaId.getSaldo().add(importe));
+        deCuentaId.setSaldoDisponible(deCuentaId.getSaldoDisponible().add(importe));
         return m.getMovimientoId();
     }
     

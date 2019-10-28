@@ -42,7 +42,7 @@ public class AuthController {
         RegistrationResponse r = new RegistrationResponse();
         //aca creamos la persona y el usuario a traves del service.
 
-        int usuarioCreadoId = usuarioService.alta(req.fullName, req.dni, req.email, req.userName, req.edad,
+        int usuarioCreadoId = usuarioService.alta(req.fullName, req.dni, req.email, req.username, req.edad,
                 req.password, req.moneda, req. userEmail);
 
         r.isOk = true;
@@ -57,10 +57,10 @@ public class AuthController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest authenticationRequest)
             throws Exception {
 
-        usuarioService.login(authenticationRequest.userName, authenticationRequest.password);
+        usuarioService.login(authenticationRequest.username, authenticationRequest.password);
 
         final UserDetails userDetails = userDetailsService
-            .loadUserByUsername(authenticationRequest.userName);
+            .loadUserByUsername(authenticationRequest.username);
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 

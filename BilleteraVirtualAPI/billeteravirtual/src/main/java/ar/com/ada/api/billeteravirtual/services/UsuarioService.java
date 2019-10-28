@@ -29,8 +29,8 @@ public class UsuarioService {
     @Autowired
     PersonaService ps;
 
-    @PostMapping("auth/register")
-    public int alta(String fullName, String dni, String email, String userName, int edad, String password,
+    
+    public int alta(String fullName, String dni, String email, String username, int edad, String password,
             String moneda, String userEmail) throws PersonaEdadException, PersonaDNIException {
         Persona p = new Persona();
         p.setNombre(fullName);
@@ -41,7 +41,7 @@ public class UsuarioService {
         p.getPersonaId();
 
         Usuario u = new Usuario();
-        u.setUserName(p.getEmail());
+        u.setUsername(p.getEmail());
         u.setUserEmail(p.getEmail());
 
         String passwordEnTextoClaro;
@@ -49,7 +49,7 @@ public class UsuarioService {
         String passwordEnTextoClaroDesencriptado;
 
         passwordEnTextoClaro = password;
-        passwordEncriptada = Crypto.encrypt(passwordEnTextoClaro, u.getUserName());
+        passwordEncriptada = Crypto.encrypt(passwordEnTextoClaro, u.getUsername());
 
         u.setPassword(passwordEncriptada);
         p.setUsuario(u);
@@ -75,9 +75,9 @@ public class UsuarioService {
         return repo.findAll();
     }
 
-    public Usuario buscarPorUserName(String userName) {
+    public Usuario buscarPorUsername(String username) {
 
-        return repo.findByuserName(userName);
+        return repo.findByusername(username);
     }
 
     public Usuario buscarPorEmail(String email) {
@@ -94,11 +94,11 @@ public class UsuarioService {
         return null;
     }
 
-    public void login(String userName, String password){
+    public void login(String username, String password){
 
-        Usuario u = repo.findByuserName(userName);
+        Usuario u = repo.findByusername(username);
 
-        if( u== null || !u.getPassword().equals(Crypto.encrypt(password, u.getUserName()))){
+        if( u== null || !u.getPassword().equals(Crypto.encrypt(password, u.getUsername()))) {
 
             throw new BadCredentialsException("usuario o contraseña inválida");
 
