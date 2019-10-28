@@ -1,6 +1,4 @@
 package ar.com.ada.api.billeteravirtual.entities;
-
-import java.math.BigDecimal;
 import java.util.*;
 
 import javax.persistence.*;
@@ -24,8 +22,7 @@ import javax.persistence.*;
         @Column(name = "fechamovimiento")
         private Date fechaMovimiento;
     
-        private BigDecimal importe = new BigDecimal(0);
-    
+        private double importe;
         @Column(name = "tipooperacion")
         private String tipoOperacion;
     
@@ -73,11 +70,11 @@ import javax.persistence.*;
             this.fechaMovimiento = fechaMovimiento;
         }
     
-        public BigDecimal getImporte() {
+        public double getImporte() {
             return importe;
         }
 
-        public void setImporte(BigDecimal importe){
+        public void setImporte(double importe){
             this.importe= importe;
         }
 
@@ -164,10 +161,10 @@ import javax.persistence.*;
             this.setaUsuarioId(u.getUsuarioId());
             this.setDeUsuarioId(u.getUsuarioId());
             if (this.getTipoOperacion().equals("Entrada")) {
-                c.setSaldo(c.getSaldo().add(this.getImporte()));
+                c.setSaldo(c.getSaldo() +  this.getImporte() );
                 c.setSaldoDisponible(c.getSaldo());
             } else {
-                c.setSaldo(c.getSaldo().subtract(this.getImporte()));
+                c.setSaldo(c.getSaldo() + this.getImporte() );
                 c.setSaldoDisponible(c.getSaldo());
             }
             this.setCuenta(c);

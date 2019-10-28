@@ -1,8 +1,11 @@
 package ar.com.ada.api.billeteravirtual.entities;
 
+
 import java.util.*;
 
 import javax.persistence.*;
+
+import ar.com.ada.api.billeteravirtual.excepciones.CuentaPorMonedaException;
 
 /**
  * Cuenta
@@ -18,7 +21,9 @@ public class Cuenta {
 
     private String moneda;
 
+
     private double saldo;
+// cuando se declara en BigDecimal se tiene que declarar  private Bigdecimal saldo =BigDecimal(0) ya que es un objeto
 
     @Column(name = "saldodisponible")
     private double saldoDisponible;
@@ -74,11 +79,13 @@ public class Cuenta {
         this.saldo = d;
     }
 
-    public double getSaldoDisponible() {
-        if (saldo > 0.00) {
+    public double getSaldoDisponible() throws CuentaPorMonedaException {
+        if (saldo > 0 ) {
             return saldo;
-        } else {
-            return 0.00;
+        } else { 
+
+            return 0;
+
         }
 
     }

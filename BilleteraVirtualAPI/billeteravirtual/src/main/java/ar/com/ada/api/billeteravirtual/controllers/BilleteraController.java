@@ -57,7 +57,8 @@ public class BilleteraController {
     }
 
     @PostMapping("billeteras/transferencias")
-    public TransferenciaResponse postTransferencia(@RequestBody TransferenciaRequest req){
+    public TransferenciaResponse postTransferencia(@RequestBody TransferenciaRequest req)
+            throws CuentaPorMonedaException {
         TransferenciaResponse r = new TransferenciaResponse();
 
         int operacionId = bs.transferir(req.billeteraIdOrigen, req.billeteraIdDestino, req.importe);

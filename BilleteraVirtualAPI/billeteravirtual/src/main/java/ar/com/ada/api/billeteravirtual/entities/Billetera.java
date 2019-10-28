@@ -1,6 +1,6 @@
 package ar.com.ada.api.billeteravirtual.entities;
 
-import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,9 +71,9 @@ public class Billetera {
         cuenta.setBilletera(this);
     }
 
-    public BigDecimal consultarSaldoDisponible(Billetera b, String moneda) throws CuentaPorMonedaException
+    public double consultarSaldoDisponible(Billetera b, String moneda) throws CuentaPorMonedaException
     {
-        BigDecimal s = new BigDecimal(0);
+        double s = 0;
 
         for (Cuenta c : b.getCuentas()){
             if (c.getMoneda().equals(moneda)){
@@ -98,7 +98,7 @@ public class Billetera {
      * @param bDestino
      * @throws CuentaPorMonedaException
      */
-    public int movimientoTransferir(BigDecimal importe, Cuenta deCuentaId, Cuenta aCuentaId)
+    public int movimientoTransferir(double importe, Cuenta deCuentaId, Cuenta aCuentaId)
             throws CuentaPorMonedaException {
         Movimiento m = new Movimiento();
         m.setImporte(importe);
@@ -112,8 +112,8 @@ public class Billetera {
         m.setaCuentaId(aCuentaId.getCuentaId());
         m.setDeUsuarioId(deCuentaId.getUsuario().getUsuarioId());
         m.setaUsuarioId(aCuentaId.getUsuario().getUsuarioId());
-        deCuentaId.setSaldo(deCuentaId.getSaldo().add(importe));
-        deCuentaId.setSaldoDisponible(deCuentaId.getSaldoDisponible().add(importe));
+        deCuentaId.setSaldo(deCuentaId.getSaldo() + importe );
+        deCuentaId.setSaldoDisponible(deCuentaId.getSaldoDisponible()+ (importe));
         return m.getMovimientoId();
     }
     
