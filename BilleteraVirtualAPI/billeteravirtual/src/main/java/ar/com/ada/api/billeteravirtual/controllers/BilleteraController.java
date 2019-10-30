@@ -1,5 +1,6 @@
 package ar.com.ada.api.billeteravirtual.controllers;
 
+import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +28,9 @@ public class BilleteraController {
     CuentaService cs;
 
     @GetMapping("billeteras/{billeteraId}/saldos/{moneda}")
-    public double getConsultarSaldo(@PathVariable int billeteraId,@PathVariable String moneda){
+    public BigDecimal getConsultarSaldo(@PathVariable Integer billeteraId,@PathVariable String moneda){
 
-        double saldo = bs.consultarSaldo(billeteraId, moneda);
+        BigDecimal saldo = bs.consultarSaldo(billeteraId, moneda);
         return saldo;
 
 

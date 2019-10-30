@@ -1,6 +1,6 @@
 package ar.com.ada.api.billeteravirtual.entities;
 
-
+import java.math.BigDecimal;
 import java.util.*;
 
 import javax.persistence.*;
@@ -21,12 +21,12 @@ public class Cuenta {
 
     private String moneda;
 
-
-    private double saldo;
-// cuando se declara en BigDecimal se tiene que declarar  private Bigdecimal saldo =BigDecimal(0) ya que es un objeto
+    private BigDecimal saldo;
+    // cuando se declara en BigDecimal se tiene que declarar private Bigdecimal
+    // saldo =BigDecimal(0) ya que es un objeto
 
     @Column(name = "saldodisponible")
-    private double saldoDisponible;
+    private BigDecimal saldoDisponible;
 
     @ManyToOne
     @JoinColumn(name = "billetera_id", referencedColumnName = "billetera_id")
@@ -36,8 +36,6 @@ public class Cuenta {
     private List<Movimiento> movimientos = new ArrayList<Movimiento>();
 
     public static Scanner Teclado = new Scanner(System.in);
-
-
 
     public Cuenta(Billetera b, String moneda) {
         this.moneda = moneda;
@@ -71,27 +69,27 @@ public class Cuenta {
         this.moneda = moneda;
     }
 
-    public double getSaldo() {
+    public BigDecimal getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(double d) {
-        this.saldo = d;
+    public void setSaldo(BigDecimal d) {
+        this.saldo.equals(d);
     }
 
-    public double getSaldoDisponible() throws CuentaPorMonedaException {
-        if (saldo > 0 ) {
+    public BigDecimal getSaldoDisponible() throws CuentaPorMonedaException {
+        if (saldo.compareTo(BigDecimal.ZERO) > 0) {
             return saldo;
-        } else { 
+        } else {
 
-            return 0;
+            return BigDecimal.ZERO;
 
         }
 
     }
 
-    public void setSaldoDisponible(double d) {
-        this.saldoDisponible = 0;
+    public void setSaldoDisponible(BigDecimal bigDecimal) {
+        this.saldoDisponible.compareTo(bigDecimal.ZERO);
     }
 
     public Billetera getBilletera() {
@@ -112,4 +110,21 @@ public class Cuenta {
 
     }
 
+    public void agregarSaldo(Integer usuarioId, BigDecimal importe, String conceptoOperacion, String detalle) {
+
+        Movimiento m = new Movimiento();
+
+        m.setCuenta(this);
+        m.setTipoOperacion("INGRESO");
+        m.setImporte(importe);
+        m.setconceptoOperacion(conceptoOperacion);
+        m.setDetalle(detalle);
+        m.setFechaMovimiento(new Date());
+        m.setDeUsuarioId(usuarioId);
+        m.setaUsuarioId(usuarioId);
+        m.setDeCuentaId(this.cuentaId);
+        m.setaCuentaId(this.cuentaId);
+
+        this.movimientos.add(m);
+    }
 }

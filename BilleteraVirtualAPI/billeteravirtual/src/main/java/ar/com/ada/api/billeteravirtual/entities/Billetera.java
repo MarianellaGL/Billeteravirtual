@@ -1,6 +1,7 @@
 package ar.com.ada.api.billeteravirtual.entities;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,11 +70,18 @@ public class Billetera {
     public void agregarCuenta(Cuenta cuenta) {
         this.cuentas.add(cuenta);
         cuenta.setBilletera(this);
+
     }
 
-    public double consultarSaldoDisponible(Billetera b, String moneda) throws CuentaPorMonedaException
+    public void agregarSaldo(BigDecimal saldo,String moneda, String conceptoOperacion, String detalle) {
+        this.buscarCuenta(moneda).agregarSaldo(persona.getUsuario().getUsuarioId(), saldo, conceptoOperacion, detalle);
+    
+    }
+
+
+    public BigDecimal ConsultarSaldoDisponible(Billetera b, String moneda) throws CuentaPorMonedaException
     {
-        double s = 0;
+        BigDecimal s= new BigDecimal(0);
 
         for (Cuenta c : b.getCuentas()){
             if (c.getMoneda().equals(moneda)){
@@ -83,6 +91,17 @@ public class Billetera {
 
         return s;
       
+    }
+
+    private Cuenta buscarCuenta (String moneda){
+        for (Cuenta cta : this.cuentas) {
+            if (moneda.equals(cta.getMoneda())) {
+                return cta;
+            }
+            
+        }
+
+        return null;
     }
 
     
@@ -98,7 +117,7 @@ public class Billetera {
      * @param bDestino
      * @throws CuentaPorMonedaException
      */
-    public int movimientoTransferir(double importe, Cuenta deCuentaId, Cuenta aCuentaId)
+    public int movimientoTransferir(BigDecimal importe, Cuenta deCuentaId, Cuenta aCuentaId)
             throws CuentaPorMonedaException {
         Movimiento m = new Movimiento();
         m.setImporte(importe);
@@ -112,8 +131,8 @@ public class Billetera {
         m.setaCuentaId(aCuentaId.getCuentaId());
         m.setDeUsuarioId(deCuentaId.getUsuario().getUsuarioId());
         m.setaUsuarioId(aCuentaId.getUsuario().getUsuarioId());
-        deCuentaId.setSaldo(deCuentaId.getSaldo() + importe );
-        deCuentaId.setSaldoDisponible(deCuentaId.getSaldoDisponible()+ (importe));
+        deCuentaId.setSaldo(deCuentaId.getSaldo().add(importe));
+        deCuentaId.setSaldoDisponible(deCuentaId.getSaldoDisponible().add(importe));
         return m.getMovimientoId();
     }
     

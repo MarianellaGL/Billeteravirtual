@@ -4,9 +4,9 @@ public class MovimientoResponse {
 
     public boolean isOk = false;
     public String message = "";
-    public int billeteraId;
+    public Integer billeteraId;
     public String moneda;
-    public int movimientoId;
+    public Integer movimientoId;
     public String detalle;
   
 

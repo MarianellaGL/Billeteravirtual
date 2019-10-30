@@ -24,10 +24,10 @@ public class Persona {
     @Id
     @Column(name = "persona_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int personaId;
+    private Integer personaId;
     private String nombre;
     private String dni;
-    private int edad;
+    private Integer edad;
     @Column(name = "email")
     private String email;
     @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL)
@@ -38,7 +38,7 @@ public class Persona {
     @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL)
     private Usuario usuario;
 
-    public Persona(String nombre, String dni, int edad, String email) {
+    public Persona(String nombre, String dni, Integer edad, String email) {
         this.nombre = nombre;
         this.dni = dni;
         this.edad = edad;
@@ -48,11 +48,11 @@ public class Persona {
     public Persona() {
     }
 
-    public int getPersonaId() {
+    public Integer getPersonaId() {
         return personaId;
     }
 
-    public void setPersonaId(int personaId) {
+    public void setPersonaId(Integer personaId) {
         this.personaId = personaId;
     }
 
@@ -73,11 +73,11 @@ public class Persona {
         this.dni = dni;
     }
 
-    public int getEdad() {
+    public Integer getEdad() {
         return edad;
     }
 
-    public void setEdad(int edad) throws PersonaEdadException {
+    public void setEdad(Integer edad) throws PersonaEdadException {
         if(edad < 18)
         {
             //no se ejecuta nada mas despues del throw

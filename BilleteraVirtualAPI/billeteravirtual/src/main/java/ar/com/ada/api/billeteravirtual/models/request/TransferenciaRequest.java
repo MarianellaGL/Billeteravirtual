@@ -1,10 +1,12 @@
 package ar.com.ada.api.billeteravirtual.models.request;
 
+import java.math.BigDecimal;
+
 public class TransferenciaRequest {
 
-    public int billeteraIdOrigen;
-    public int billeteraIdDestino;
-    public double importe;
+    public Integer billeteraIdOrigen;
+    public Integer billeteraIdDestino;
+    public BigDecimal importe;
 
 
     

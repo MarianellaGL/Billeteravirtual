@@ -1,5 +1,6 @@
 package ar.com.ada.api.billeteravirtual.services;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class MovimientoService {
      * @param tipo     "Entrada" o "Salida"
      * @throws CuentaPorMonedaException
      */
-    public int depositar(int billeteraId, String moneda, String conceptoOperacion, double importe, String tipoOperacion, String detalle)
+    public int depositar(Integer billeteraId, String moneda, String conceptoOperacion, BigDecimal importe, String tipoOperacion, String detalle)
             throws CuentaPorMonedaException {
         Billetera b = bs.buscarPorId(billeteraId);
         Cuenta c = cs.getCuentaPorMoneda(billeteraId, moneda);
@@ -54,10 +55,10 @@ public class MovimientoService {
         m.setDeUsuarioId(c.getBilletera().getPersona().getUsuario().getUsuarioId());
         m.setaUsuarioId(c.getBilletera().getPersona().getUsuario().getUsuarioId());
         if (m.getTipoOperacion().equals("Entrada")) {
-            c.setSaldo(c.getSaldo() + m.getImporte());
+            c.setSaldo(c.getSaldo().add(m.getImporte()));
             c.setSaldoDisponible(c.getSaldo());
         } else {
-            c.setSaldo(c.getSaldo() - m.getImporte());
+            c.setSaldo(c.getSaldo().subtract((m.getImporte())));
             c.setSaldoDisponible(c.getSaldo());
         }
         m.setCuenta(c);

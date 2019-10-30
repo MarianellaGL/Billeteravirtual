@@ -1,4 +1,5 @@
 package ar.com.ada.api.billeteravirtual.entities;
+import java.math.BigDecimal;
 import java.util.*;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import javax.persistence.*;
         @Id
         @Column(name = "movimiento_id")
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int movimientoId;
+        private Integer movimientoId;
     
         @ManyToOne
         @JoinColumn(name = "cuenta_id", referencedColumnName = "cuenta_id")
@@ -22,7 +23,7 @@ import javax.persistence.*;
         @Column(name = "fechamovimiento")
         private Date fechaMovimiento;
     
-        private double importe;
+        private BigDecimal importe;
         @Column(name = "tipooperacion")
         private String tipoOperacion;
     
@@ -31,25 +32,25 @@ import javax.persistence.*;
     
         private String detalle;
     
-        private int estado;
+        private String estado;
     
         @Column(name = "deusuario_id")
-        private int deUsuarioId;
+        private Integer deUsuarioId;
     
         @Column(name = "ausuario_id")
-        private int aUsuarioId;
+        private Integer aUsuarioId;
     
         @Column(name = "decuenta_id")
-        private int deCuentaId;
+        private Integer deCuentaId;
     
         @Column(name = "acuenta_id")
-        private int aCuentaId;
+        private Integer aCuentaId;
     
-        public int getMovimientoId() {
+        public Integer getMovimientoId() {
             return movimientoId;
         }
     
-        public void setMovimientoId(int movimientoId) {
+        public void setMovimientoId(Integer movimientoId) {
             this.movimientoId = movimientoId;
         }
     
@@ -70,11 +71,11 @@ import javax.persistence.*;
             this.fechaMovimiento = fechaMovimiento;
         }
     
-        public double getImporte() {
+        public BigDecimal getImporte() {
             return importe;
         }
 
-        public void setImporte(double importe){
+        public void setImporte(BigDecimal importe){
             this.importe= importe;
         }
 
@@ -97,43 +98,43 @@ import javax.persistence.*;
             this.detalle = detalle;
         }
     
-        public int getEstado() {
+        public String getEstado() {
             return estado;
         }
     
-        public void setEstado(int estado) {
+        public void setEstado(String estado) {
             this.estado = estado;
         }
     
-        public int getDeUsuarioId() {
+        public Integer getDeUsuarioId() {
             return deUsuarioId;
         }
     
-        public void setDeUsuarioId(int deUsuarioId) {
+        public void setDeUsuarioId(Integer deUsuarioId) {
             this.deUsuarioId = deUsuarioId;
         }
     
-        public int getaUsuarioId() {
+        public Integer getaUsuarioId() {
             return aUsuarioId;
         }
     
-        public void setaUsuarioId(int aUsuarioId) {
+        public void setaUsuarioId(Integer aUsuarioId) {
             this.aUsuarioId = aUsuarioId;
         }
     
-        public int getDeCuentaId() {
+        public Integer getDeCuentaId() {
             return deCuentaId;
         }
     
-        public void setDeCuentaId(int deCuentaId) {
+        public void setDeCuentaId(Integer deCuentaId) {
             this.deCuentaId = deCuentaId;
         }
     
-        public int getaCuentaId() {
+        public Integer getaCuentaId() {
             return aCuentaId;
         }
     
-        public void setaCuentaId(int aCuentaId) {
+        public void setaCuentaId(Integer aCuentaId) {
             this.aCuentaId = aCuentaId;
         }
     
@@ -161,10 +162,10 @@ import javax.persistence.*;
             this.setaUsuarioId(u.getUsuarioId());
             this.setDeUsuarioId(u.getUsuarioId());
             if (this.getTipoOperacion().equals("Entrada")) {
-                c.setSaldo(c.getSaldo() +  this.getImporte() );
+                c.setSaldo(c.getSaldo().add(this.getImporte()));
                 c.setSaldoDisponible(c.getSaldo());
             } else {
-                c.setSaldo(c.getSaldo() + this.getImporte() );
+                c.setSaldo(c.getSaldo().add(this.getImporte()));
                 c.setSaldoDisponible(c.getSaldo());
             }
             this.setCuenta(c);

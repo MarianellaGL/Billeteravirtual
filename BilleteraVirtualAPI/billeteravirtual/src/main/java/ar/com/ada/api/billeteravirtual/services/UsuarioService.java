@@ -1,5 +1,6 @@
 package ar.com.ada.api.billeteravirtual.services;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,9 +59,18 @@ public class UsuarioService {
         Billetera b = new Billetera(p);
         Cuenta c = new Cuenta(b, moneda);
 
-        c.setBilletera(b);
+        c.setMoneda("ARS"); // Moneda inicial en ARS.
+        b.agregarCuenta(c);
 
         bs.save(b);
+
+        BigDecimal ImporteInicial = new BigDecimal(100); 
+        b.agregarSaldo(ImporteInicial, "ARS", "Regalo", "Te regalo 100 pesitos");
+
+        emailService.SendEmail(u.getUserEmail(),"Bienvenido a la Billetera Virtual ADA!!!", 
+            "Hola "+p.getNombre()+"\nBienvenido a este hermoso proyecto hecho por todas las alumnas de ADA Backend 8va Mañana\n"+
+            "Ademas te regalamos 100 pesitos :)" );
+        
 
         return u.getUsuarioId();
 

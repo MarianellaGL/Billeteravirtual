@@ -8,7 +8,7 @@ public class RegistrationRequest {
     public String fullName;
     public String email;
     public String password;
-    public int edad;
+    public Integer edad;
     public String moneda;
     public String dni;
     public String username;

@@ -19,7 +19,7 @@ public class CuentaService {
     @Autowired
     BilleteraService bs;
 
-    public Cuenta getCuentaPorMoneda(int billeteraId, String moneda) throws CuentaPorMonedaException {
+    public Cuenta getCuentaPorMoneda(Integer billeteraId, String moneda) throws CuentaPorMonedaException {
         Billetera b = bs.buscarPorId(billeteraId);
         for (Cuenta c : b.getCuentas()) {
             if (c.getMoneda().equals(moneda)) {
