@@ -125,6 +125,7 @@ public class Billetera {
         Date f = new Date();
         m.setconceptoOperacion("Transferencia");
         m.setTipoOperacion("Transferencia");
+        m.setEstado(1);
         m.setDetalle("");
         m.setFechaMovimiento(f);
         m.setDeCuentaId(deCuentaId.getCuentaId());

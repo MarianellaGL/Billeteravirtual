@@ -54,6 +54,7 @@ public class MovimientoService {
         Date f = new Date();
         m.setconceptoOperacion("Depósito");
         m.setImporte(importe);
+        m.setEstado(1);
         m.setTipoOperacion(tipoOperacion);
         m.setDetalle(detalle);
         m.setFechaMovimiento(f);
@@ -71,7 +72,7 @@ public class MovimientoService {
         m.setCuenta(c);
         repo.save(m);
 
-        es.SendEmail(b.getPersona().getUsuario().getUserEmail()+"Deposito Realizado",
+        es.SendEmail(b.getPersona().getUsuario().getUserEmail(), "Depósito realizado"+
         "el depósito que ha ingresado a tu cuenta de" + importe +"ya se encuentra disponible para su utilización!",
         "si hay algo que está mal comunicate con nosotros!");
     

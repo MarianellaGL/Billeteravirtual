@@ -29,13 +29,13 @@ public class EmailService {
     @Value("${emailSettings.domain}")
     public String domain;
     @Value("${emailSettings.enabled}")
-    public boolean enabed;
+    public boolean enabled;
 
 
     // Basico
     public void SendEmail(String email, String subject, String message) throws UnirestException {
 
-        if (!this.enabed)
+        if (!this.enabled)
             return;
             
         JsonNode r;

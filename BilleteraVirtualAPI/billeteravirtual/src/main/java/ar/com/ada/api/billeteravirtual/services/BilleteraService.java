@@ -72,12 +72,12 @@ public class BilleteraService {
         repo.save(b2);
         
 
-        es.SendEmail(b1.getPersona().getUsuario().getUserEmail()+"Transferencia realizada",
+        es.SendEmail(b1.getPersona().getUsuario().getUserEmail(), "Transferencia realizada" +
         "La transferencia de" + importe +"Ha sido realizada con éxito!",
         "enhorabuena!!");
 
         
-        es.SendEmail(b2.getPersona().getUsuario().getUserEmail()+"Transferencia realizada",
+        es.SendEmail(b2.getPersona().getUsuario().getUserEmail(), "Transferencia realizada" +
         "Te transfirieron" + importe +"exitosamente!",
         "enhorabuena!!");
 
