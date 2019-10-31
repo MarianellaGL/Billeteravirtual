@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ar.com.ada.api.billeteravirtual.entities.*;
 import ar.com.ada.api.billeteravirtual.excepciones.CuentaPorMonedaException;
 import ar.com.ada.api.billeteravirtual.repo.MovimientoRepository;
+import ar.com.ada.api.billeteravirtual.sistemas.comms.EmailService;
 
 @Service
 public class MovimientoService {
@@ -21,6 +22,12 @@ public class MovimientoService {
 
     @Autowired
     CuentaService cs;
+
+    @Autowired
+    UsuarioService us;
+
+    @Autowired
+    EmailService es;
 
     public void save(Movimiento m) {
 
@@ -63,6 +70,12 @@ public class MovimientoService {
         }
         m.setCuenta(c);
         repo.save(m);
+
+        es.SendEmail(b.getPersona().getUsuario().getUserEmail()+"Deposito Realizado",
+        "el depósito que ha ingresado a tu cuenta de" + importe +"ya se encuentra disponible para su utilización!",
+        "si hay algo que está mal comunicate con nosotros!");
+    
+
 
         return m.getMovimientoId();
     }

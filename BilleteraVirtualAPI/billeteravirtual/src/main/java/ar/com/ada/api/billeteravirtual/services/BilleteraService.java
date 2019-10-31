@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ar.com.ada.api.billeteravirtual.entities.*;
 import ar.com.ada.api.billeteravirtual.excepciones.CuentaPorMonedaException;
 import ar.com.ada.api.billeteravirtual.repo.BilleteraRepository;
+import ar.com.ada.api.billeteravirtual.sistemas.comms.EmailService;
 
 /**
  * BilleteraService
@@ -21,6 +22,9 @@ public class BilleteraService {
 
     @Autowired
     MovimientoService ms;
+
+    @Autowired
+    EmailService es;
 
     public void save(Billetera b) {
         repo.save(b);
@@ -66,6 +70,17 @@ public class BilleteraService {
         b2.movimientoTransferir(importe, b2.getCuenta(0), b1.getCuenta(0));
         repo.save(b1);
         repo.save(b2);
+        
+
+        es.SendEmail(b1.getPersona().getUsuario().getUserEmail()+"Transferencia realizada",
+        "La transferencia de" + importe +"Ha sido realizada con éxito!",
+        "enhorabuena!!");
+
+        
+        es.SendEmail(b2.getPersona().getUsuario().getUserEmail()+"Transferencia realizada",
+        "Te transfirieron" + importe +"exitosamente!",
+        "enhorabuena!!");
+
         return mov;
     }
 }

@@ -6,6 +6,7 @@ public class MovimientoRequest {
 
     public Integer billeteraId;
     public String moneda;
+    public Integer estado;
     public String conceptoOperacion;
     public BigDecimal importe;
     public String tipoOperacion;

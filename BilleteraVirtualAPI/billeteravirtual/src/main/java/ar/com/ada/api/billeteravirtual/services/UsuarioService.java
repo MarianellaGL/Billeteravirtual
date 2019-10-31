@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import ar.com.ada.api.billeteravirtual.repo.UsuarioRepository;
 import ar.com.ada.api.billeteravirtual.security.Crypto;
+import ar.com.ada.api.billeteravirtual.sistemas.comms.EmailService;
 import ar.com.ada.api.billeteravirtual.entities.*;
 import ar.com.ada.api.billeteravirtual.excepciones.PersonaDNIException;
 import ar.com.ada.api.billeteravirtual.excepciones.PersonaEdadException;
@@ -29,6 +30,9 @@ public class UsuarioService {
 
     @Autowired
     PersonaService ps;
+
+    @Autowired
+    EmailService emailService;
 
     
     public int alta(String fullName, String dni, String email, String username, int edad, String password,
@@ -57,15 +61,19 @@ public class UsuarioService {
         ps.save(p);
 
         Billetera b = new Billetera(p);
-        Cuenta c = new Cuenta(b, moneda);
+        p.setBilletera(b);
 
-        c.setMoneda("ARS"); // Moneda inicial en ARS.
+        Cuenta c = new Cuenta();
+
+
+        c.setMoneda("ARS");
+         // Moneda inicial en ARS.
         b.agregarCuenta(c);
 
         bs.save(b);
 
-        BigDecimal ImporteInicial = new BigDecimal(100); 
-        b.agregarSaldo(ImporteInicial, "ARS", "Regalo", "Te regalo 100 pesitos");
+        BigDecimal importeInicial = new BigDecimal(100); 
+        b.agregarSaldo(importeInicial, "ARS", "Regalo", "Te regalo 100 pesitos");
 
         emailService.SendEmail(u.getUserEmail(),"Bienvenido a la Billetera Virtual ADA!!!", 
             "Hola "+p.getNombre()+"\nBienvenido a este hermoso proyecto hecho por todas las alumnas de ADA Backend 8va Mañana\n"+
@@ -90,10 +98,6 @@ public class UsuarioService {
         return repo.findByusername(username);
     }
 
-    public Usuario buscarPorEmail(String email) {
-
-        return repo.findByUserEmail(email);
-    }
 
     public Usuario buscarPorId(int id) {
 
@@ -114,5 +118,9 @@ public class UsuarioService {
 
         }
     }
+
+	public Usuario buscarPorEmail( String email) {
+        return repo.findByUserEmail(email);
+	}
 
 }

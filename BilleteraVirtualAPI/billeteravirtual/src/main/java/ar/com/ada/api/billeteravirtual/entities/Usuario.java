@@ -25,10 +25,10 @@ public class Usuario {
     private Persona persona;
   
 
-    public Usuario (String username, String password, String email){
+    public Usuario (String username, String password, String userEmail){
         this.username = username;
         this.password = password;
-        this.userEmail = email;
+        this.userEmail = userEmail;
     }
 
     public Usuario(){

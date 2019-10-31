@@ -43,7 +43,7 @@ public class AuthController {
         //aca creamos la persona y el usuario a traves del service.
 
         int usuarioCreadoId = usuarioService.alta(req.fullName, req.dni, req.email, req.username, req.edad,
-                req.password, req.moneda, req. userEmail);
+                req.password, req.moneda,req.userEmail);
 
         r.isOk = true;
         r.message = "Te registraste con exitoooo";

@@ -32,7 +32,7 @@ import javax.persistence.*;
     
         private String detalle;
     
-        private String estado;
+        private Integer estado;
     
         @Column(name = "deusuario_id")
         private Integer deUsuarioId;
@@ -98,12 +98,12 @@ import javax.persistence.*;
             this.detalle = detalle;
         }
     
-        public String getEstado() {
+        public Integer getEstado() {
             return estado;
         }
     
-        public void setEstado(String estado) {
-            this.estado = estado;
+        public void setEstado(Integer estado) {
+            this.estado = 0;
         }
     
         public Integer getDeUsuarioId() {
@@ -156,6 +156,7 @@ import javax.persistence.*;
             this.setImporte(importe);
             this.setTipoOperacion(tipoOperacion);
             this.setFechaMovimiento(f);
+            this.setEstado(estado);
             this.setDetalle(detalle);
             this.setDeCuentaId(c.getCuentaId());
             this.setaCuentaId(c.getCuentaId());

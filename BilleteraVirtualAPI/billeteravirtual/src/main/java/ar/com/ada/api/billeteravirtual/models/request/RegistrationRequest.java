@@ -12,5 +12,5 @@ public class RegistrationRequest {
     public String moneda;
     public String dni;
     public String username;
-	public String userEmail;
+    public String userEmail;
 }

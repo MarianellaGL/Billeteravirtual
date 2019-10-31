@@ -21,12 +21,11 @@ public class Cuenta {
 
     private String moneda;
 
-    private BigDecimal saldo;
-    // cuando se declara en BigDecimal se tiene que declarar private Bigdecimal
-    // saldo =BigDecimal(0) ya que es un objeto
+    private BigDecimal saldo = new BigDecimal(0);
+    
 
     @Column(name = "saldodisponible")
-    private BigDecimal saldoDisponible;
+    private BigDecimal saldoDisponible = new BigDecimal(0);
 
     @ManyToOne
     @JoinColumn(name = "billetera_id", referencedColumnName = "billetera_id")
@@ -39,6 +38,7 @@ public class Cuenta {
 
     public Cuenta(Billetera b, String moneda) {
         this.moneda = moneda;
+        
         b.getCuentas().add(this);
 
     }
@@ -73,8 +73,8 @@ public class Cuenta {
         return saldo;
     }
 
-    public void setSaldo(BigDecimal d) {
-        this.saldo.equals(d);
+    public void setSaldo(BigDecimal saldo) {
+        this.saldo = saldo;
     }
 
     public BigDecimal getSaldoDisponible() throws CuentaPorMonedaException {
@@ -88,8 +88,8 @@ public class Cuenta {
 
     }
 
-    public void setSaldoDisponible(BigDecimal bigDecimal) {
-        this.saldoDisponible.compareTo(bigDecimal.ZERO);
+    public void setSaldoDisponible(BigDecimal saldoDisponible) {
+        this.saldoDisponible = saldoDisponible;
     }
 
     public Billetera getBilletera() {
